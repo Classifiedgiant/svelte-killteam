@@ -1,32 +1,31 @@
 <script lang="ts">
   import { Canvas } from '@threlte/core'
-  import type { PageProps } from './$types';
   import Scene from '$lib/Scene.svelte'
   import { GameStates } from '$lib/proto/messages'
+  import { GameState } from "$lib/GameState.svelte"
+  import { handlers } from '$lib/GameProtoHandlers';
   import { PUBLIC_API_URL } from '$env/static/public'
 
-  // let { data }: PageProps = $props();
   let gameId = $state("<null>")
   let wsToken = $state("<null>")
+  let gameState = new GameState();
 
   function handleServerMessage(data: ArrayBuffer) {
     console.log("raw type:", data.constructor.name, "byteLength:", (data as ArrayBuffer)?.byteLength);
     console.log("raw bytes:", Array.from(new Uint8Array(data)));
     const envelope = GameStates.ServerMessage.decode(new Uint8Array(data));
 
-    switch (envelope.payload) {
-      case "startGame":
-        console.log("StartGame:", envelope.startGame);
-        break;
-      case "waitingForPlayer":
-        console.log("WaitingForPlayer:", envelope.waitingForPlayer);
-        break;
-      default:
-        console.warn("Unknown ServerMessage payload:", envelope);
+    const kind = envelope.payload;
+    if (!kind) {
+      console.warn("Unknown server messages: ", envelope);
+      return;
     }
+    handlers[kind](gameState, envelope[kind]);
   }
 </script>
 
+
+{#if gameState.stateName != "waitingForPlayer"}
 <button type="button" onclick={async () => {
     const userId = 1228;
     const url = PUBLIC_API_URL;
@@ -66,16 +65,8 @@
     });
 
 }}>ConnectToGame</button>
-
-<h1>{gameId}</h1>
-<h1>{wsToken}</h1>
-
-<!-- {#if true}
-<button type="button" onclick={() => connectToGame = !connectToGame}>
-  Connect To Game
-</button>
 {:else}
 <Canvas>
   <Scene />
 </Canvas>
-{/if} -->
+{/if}
