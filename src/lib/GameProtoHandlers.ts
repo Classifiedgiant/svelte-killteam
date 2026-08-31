@@ -14,6 +14,6 @@ export const handlers: ProtoHandlers = {
     },
 
     waitingForPlayer(gameState, msg) {
-
+        console.log("Waiting for Player...");
     }
 };
