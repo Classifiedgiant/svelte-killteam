@@ -10,6 +10,10 @@ type ProtoHandlers = {
 export const handlers: ProtoHandlers = {
     // starts the game
     startGame(gameState, msg) {
+        console.log("Both players joined...");
+
+        // TODO: use the msg details to load level
+        gameState.stateName = "StartGame";
 
     },
 

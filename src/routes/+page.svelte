@@ -25,9 +25,11 @@
 </script>
 
 
-{#if gameState.stateName != "waitingForPlayer"}
+{#if gameState.stateName != "StartGame"}
 <button type="button" onclick={async () => {
-    const userId = 1228;
+    // TODO: make random userId for testing purposes
+    // This need to be replaced with allocated userId's
+    const userId = Math.floor(Math.random() * (10 - 1 + 1) + 1);
     const url = PUBLIC_API_URL;
 
     const resp = await fetch(url + "/game", {

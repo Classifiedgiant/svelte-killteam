@@ -18,11 +18,13 @@ class Operator {
     save: number | null = null;
     wounds: number | null = null;
     keywords: number[] = [];
+    model?: string;
 }
 
 // Level
 class Level {
     SpawnArea: Point | null = null;
+    model?: string;
 }
 
 class Point {
