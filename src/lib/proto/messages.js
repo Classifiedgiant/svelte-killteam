@@ -1091,6 +1091,7 @@ export const GameStates = $root.GameStates = (() => {
          * @property {number|null} [save] Operator save
          * @property {number|null} [wounds] Operator wounds
          * @property {Array.<string>|null} [keywords] Operator keywords
+         * @property {GameStates.Resource.$Properties|null} [model] Operator model
          * @property {Array.<Uint8Array>} [$unknowns] Unknown fields preserved while decoding when enabled
          */
 
@@ -1188,6 +1189,14 @@ export const GameStates = $root.GameStates = (() => {
         Operator.prototype.keywords = $util.emptyArray;
 
         /**
+         * Operator model.
+         * @member {GameStates.Resource.$Properties|null|undefined} model
+         * @memberof GameStates.Operator
+         * @instance
+         */
+        Operator.prototype.model = null;
+
+        /**
          * Creates a new Operator instance using the specified properties.
          * @function create
          * @memberof GameStates.Operator
@@ -1236,6 +1245,8 @@ export const GameStates = $root.GameStates = (() => {
             if (message.keywords != null && message.keywords.length)
                 for (let i = 0; i < message.keywords.length; ++i)
                     writer.uint32(/* id 9, wireType 2 =*/74).string(message.keywords[i]);
+            if (message.model != null && $Object.hasOwnProperty.call(message, "model"))
+                $root.GameStates.Resource.encode(message.model, writer.uint32(/* id 10, wireType 2 =*/82).fork(), _depth + 1).ldelim();
             if (message.$unknowns != null && $Object.hasOwnProperty.call(message, "$unknowns"))
                 for (let i = 0; i < message.$unknowns.length; ++i)
                     writer.raw(message.$unknowns[i]);
@@ -1354,6 +1365,12 @@ export const GameStates = $root.GameStates = (() => {
                         message.keywords.push(reader.stringVerify());
                         continue;
                     }
+                case 10: {
+                        if (wireType !== 2)
+                            break;
+                        message.model = $root.GameStates.Resource.decode(reader, reader.uint32(), $undefined, _depth + 1, message.model);
+                        continue;
+                    }
                 }
                 reader.skipType(wireType, _depth, tag);
                 if (!reader.discardUnknown) {
@@ -1425,6 +1442,11 @@ export const GameStates = $root.GameStates = (() => {
                     if (!$util.isString(message.keywords[i]))
                         return "keywords: string[] expected";
             }
+            if (message.model != null && $Object.hasOwnProperty.call(message, "model")) {
+                let error = $root.GameStates.Resource.verify(message.model, _depth + 1);
+                if (error)
+                    return "model." + error;
+            }
             return null;
         };
 
@@ -1474,6 +1496,11 @@ export const GameStates = $root.GameStates = (() => {
                 for (let i = 0; i < object.keywords.length; ++i)
                     message.keywords[i] = $String(object.keywords[i]);
             }
+            if (object.model != null) {
+                if (!$util.isObject(object.model))
+                    throw $TypeError(".GameStates.Operator.model: object expected");
+                message.model = $root.GameStates.Resource.fromObject(object.model, _depth + 1);
+            }
             return message;
         };
 
@@ -1504,6 +1531,7 @@ export const GameStates = $root.GameStates = (() => {
                 object.defense = 0;
                 object.save = 0;
                 object.wounds = 0;
+                object.model = null;
             }
             if (message.name != null && $Object.hasOwnProperty.call(message, "name"))
                 object.name = message.name;
@@ -1524,6 +1552,8 @@ export const GameStates = $root.GameStates = (() => {
                 for (let j = 0; j < message.keywords.length; ++j)
                     object.keywords[j] = message.keywords[j];
             }
+            if (message.model != null && $Object.hasOwnProperty.call(message, "model"))
+                object.model = $root.GameStates.Resource.toObject(message.model, options, _depth + 1);
             return object;
         };
 
@@ -1560,7 +1590,8 @@ export const GameStates = $root.GameStates = (() => {
         /**
          * Properties of a Level.
          * @typedef {Object} GameStates.Level.$Properties
-         * @property {string|null} [resource] Level resource
+         * @property {string|null} [name] Level name
+         * @property {GameStates.Resource.$Properties|null} [model] Level model
          * @property {Array.<Uint8Array>} [$unknowns] Unknown fields preserved while decoding when enabled
          */
 
@@ -1593,12 +1624,20 @@ export const GameStates = $root.GameStates = (() => {
         };
 
         /**
-         * Level resource.
-         * @member {string} resource
+         * Level name.
+         * @member {string} name
          * @memberof GameStates.Level
          * @instance
          */
-        Level.prototype.resource = "";
+        Level.prototype.name = "";
+
+        /**
+         * Level model.
+         * @member {GameStates.Resource.$Properties|null|undefined} model
+         * @memberof GameStates.Level
+         * @instance
+         */
+        Level.prototype.model = null;
 
         /**
          * Creates a new Level instance using the specified properties.
@@ -1632,8 +1671,10 @@ export const GameStates = $root.GameStates = (() => {
                 _depth = 0;
             if (_depth > $util.recursionLimit)
                 throw $Error("max depth exceeded");
-            if (message.resource != null && $Object.hasOwnProperty.call(message, "resource") && message.resource !== "")
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.resource);
+            if (message.name != null && $Object.hasOwnProperty.call(message, "name") && message.name !== "")
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
+            if (message.model != null && $Object.hasOwnProperty.call(message, "model"))
+                $root.GameStates.Resource.encode(message.model, writer.uint32(/* id 2, wireType 2 =*/18).fork(), _depth + 1).ldelim();
             if (message.$unknowns != null && $Object.hasOwnProperty.call(message, "$unknowns"))
                 for (let i = 0; i < message.$unknowns.length; ++i)
                     writer.raw(message.$unknowns[i]);
@@ -1685,9 +1726,15 @@ export const GameStates = $root.GameStates = (() => {
                         if (wireType !== 2)
                             break;
                         if ((value = reader.stringVerify()).length)
-                            message.resource = value;
+                            message.name = value;
                         else
-                            delete message.resource;
+                            delete message.name;
+                        continue;
+                    }
+                case 2: {
+                        if (wireType !== 2)
+                            break;
+                        message.model = $root.GameStates.Resource.decode(reader, reader.uint32(), $undefined, _depth + 1, message.model);
                         continue;
                     }
                 }
@@ -1733,9 +1780,14 @@ export const GameStates = $root.GameStates = (() => {
                 _depth = 0;
             if (_depth > $util.recursionLimit)
                 return "max depth exceeded";
-            if (message.resource != null && $Object.hasOwnProperty.call(message, "resource"))
-                if (!$util.isString(message.resource))
-                    return "resource: string expected";
+            if (message.name != null && $Object.hasOwnProperty.call(message, "name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.model != null && $Object.hasOwnProperty.call(message, "model")) {
+                let error = $root.GameStates.Resource.verify(message.model, _depth + 1);
+                if (error)
+                    return "model." + error;
+            }
             return null;
         };
 
@@ -1757,9 +1809,14 @@ export const GameStates = $root.GameStates = (() => {
             if (_depth > $util.recursionLimit)
                 throw $Error("max depth exceeded");
             let message = new $root.GameStates.Level();
-            if (object.resource != null)
-                if (typeof object.resource !== "string" || object.resource.length)
-                    message.resource = $String(object.resource);
+            if (object.name != null)
+                if (typeof object.name !== "string" || object.name.length)
+                    message.name = $String(object.name);
+            if (object.model != null) {
+                if (!$util.isObject(object.model))
+                    throw $TypeError(".GameStates.Level.model: object expected");
+                message.model = $root.GameStates.Resource.fromObject(object.model, _depth + 1);
+            }
             return message;
         };
 
@@ -1780,10 +1837,14 @@ export const GameStates = $root.GameStates = (() => {
             if (_depth > $util.recursionLimit)
                 throw $Error("max depth exceeded");
             let object = {};
-            if (options.defaults)
-                object.resource = "";
-            if (message.resource != null && $Object.hasOwnProperty.call(message, "resource"))
-                object.resource = message.resource;
+            if (options.defaults) {
+                object.name = "";
+                object.model = null;
+            }
+            if (message.name != null && $Object.hasOwnProperty.call(message, "name"))
+                object.name = message.name;
+            if (message.model != null && $Object.hasOwnProperty.call(message, "model"))
+                object.model = $root.GameStates.Resource.toObject(message.model, options, _depth + 1);
             return object;
         };
 
@@ -2423,6 +2484,266 @@ export const GameStates = $root.GameStates = (() => {
         };
 
         return Point;
+    })();
+
+    GameStates.Resource = (function() {
+
+        /**
+         * Properties of a Resource.
+         * @typedef {Object} GameStates.Resource.$Properties
+         * @property {string|null} [modelPath] Resource modelPath
+         * @property {Array.<Uint8Array>} [$unknowns] Unknown fields preserved while decoding when enabled
+         */
+
+        /**
+         * Properties of a Resource.
+         * @memberof GameStates
+         * @interface IResource
+         * @augments GameStates.Resource.$Properties
+         * @deprecated Use GameStates.Resource.$Properties instead.
+         */
+
+        /**
+         * Shape of a Resource.
+         * @typedef {GameStates.Resource.$Properties} GameStates.Resource.$Shape
+         */
+
+        /**
+         * Constructs a new Resource.
+         * @memberof GameStates
+         * @classdesc Represents a Resource.
+         * @constructor
+         * @param {GameStates.Resource.$Properties=} [properties] Properties to set
+         * @property {Array.<Uint8Array>} [$unknowns] Unknown fields preserved while decoding when enabled
+         */
+        const Resource = function (properties) {
+            if (properties)
+                for (let keys = $Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null && keys[i] !== "__proto__")
+                        this[keys[i]] = properties[keys[i]];
+        };
+
+        /**
+         * Resource modelPath.
+         * @member {string} modelPath
+         * @memberof GameStates.Resource
+         * @instance
+         */
+        Resource.prototype.modelPath = "";
+
+        /**
+         * Creates a new Resource instance using the specified properties.
+         * @function create
+         * @memberof GameStates.Resource
+         * @static
+         * @param {GameStates.Resource.$Properties=} [properties] Properties to set
+         * @returns {GameStates.Resource} Resource instance
+         * @type {{
+         *   (properties: GameStates.Resource.$Shape): GameStates.Resource & GameStates.Resource.$Shape;
+         *   (properties?: GameStates.Resource.$Properties): GameStates.Resource;
+         * }}
+         */
+        Resource.create = function(properties) {
+            return new Resource(properties);
+        };
+
+        /**
+         * Encodes the specified Resource message. Does not implicitly {@link GameStates.Resource.verify|verify} messages.
+         * @function encode
+         * @memberof GameStates.Resource
+         * @static
+         * @param {GameStates.Resource.$Properties} message Resource message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Resource.encode = function (message, writer, _depth) {
+            if (!writer)
+                writer = $Writer.create();
+            if (_depth === $undefined)
+                _depth = 0;
+            if (_depth > $util.recursionLimit)
+                throw $Error("max depth exceeded");
+            if (message.modelPath != null && $Object.hasOwnProperty.call(message, "modelPath") && message.modelPath !== "")
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.modelPath);
+            if (message.$unknowns != null && $Object.hasOwnProperty.call(message, "$unknowns"))
+                for (let i = 0; i < message.$unknowns.length; ++i)
+                    writer.raw(message.$unknowns[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Resource message, length delimited. Does not implicitly {@link GameStates.Resource.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof GameStates.Resource
+         * @static
+         * @param {GameStates.Resource.$Properties} message Resource message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Resource.encodeDelimited = function(message, writer) {
+            return this.encode(message, (writer || $Writer.create()).fork()).ldelim();
+        };
+
+        /**
+         * Decodes a Resource message from the specified reader or buffer.
+         * @function decode
+         * @memberof GameStates.Resource
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {GameStates.Resource & GameStates.Resource.$Shape} Resource
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Resource.decode = function (reader, length, _end, _depth, _target) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            if (_depth === $undefined)
+                _depth = 0;
+            if (_depth > $Reader.recursionLimit)
+                throw $Error("max depth exceeded");
+            let end = length === $undefined ? reader.len : reader.pos + length, message = _target || new $root.GameStates.Resource(), value;
+            while (reader.pos < end) {
+                let start = reader.pos;
+                let tag = reader.tag();
+                if (tag === _end) {
+                    _end = $undefined;
+                    break;
+                }
+                let wireType = tag & 7;
+                switch (tag >>>= 3) {
+                case 1: {
+                        if (wireType !== 2)
+                            break;
+                        if ((value = reader.stringVerify()).length)
+                            message.modelPath = value;
+                        else
+                            delete message.modelPath;
+                        continue;
+                    }
+                }
+                reader.skipType(wireType, _depth, tag);
+                if (!reader.discardUnknown) {
+                    $util.makeProp(message, "$unknowns", false);
+                    (message.$unknowns || (message.$unknowns = [])).push(reader.raw(start, reader.pos));
+                }
+            }
+            if (_end !== $undefined)
+                throw $Error("missing end group");
+            return message;
+        };
+
+        /**
+         * Decodes a Resource message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof GameStates.Resource
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {GameStates.Resource & GameStates.Resource.$Shape} Resource
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Resource.decodeDelimited = function(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Resource message.
+         * @function verify
+         * @memberof GameStates.Resource
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Resource.verify = function (message, _depth) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (_depth === $undefined)
+                _depth = 0;
+            if (_depth > $util.recursionLimit)
+                return "max depth exceeded";
+            if (message.modelPath != null && $Object.hasOwnProperty.call(message, "modelPath"))
+                if (!$util.isString(message.modelPath))
+                    return "modelPath: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a Resource message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof GameStates.Resource
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {GameStates.Resource} Resource
+         */
+        Resource.fromObject = function (object, _depth) {
+            if (object instanceof $root.GameStates.Resource)
+                return object;
+            if (!$util.isObject(object))
+                throw $TypeError(".GameStates.Resource: object expected");
+            if (_depth === $undefined)
+                _depth = 0;
+            if (_depth > $util.recursionLimit)
+                throw $Error("max depth exceeded");
+            let message = new $root.GameStates.Resource();
+            if (object.modelPath != null)
+                if (typeof object.modelPath !== "string" || object.modelPath.length)
+                    message.modelPath = $String(object.modelPath);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a Resource message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof GameStates.Resource
+         * @static
+         * @param {GameStates.Resource} message Resource
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Resource.toObject = function (message, options, _depth) {
+            if (!options)
+                options = {};
+            if (_depth === $undefined)
+                _depth = 0;
+            if (_depth > $util.recursionLimit)
+                throw $Error("max depth exceeded");
+            let object = {};
+            if (options.defaults)
+                object.modelPath = "";
+            if (message.modelPath != null && $Object.hasOwnProperty.call(message, "modelPath"))
+                object.modelPath = message.modelPath;
+            return object;
+        };
+
+        /**
+         * Converts this Resource to JSON.
+         * @function toJSON
+         * @memberof GameStates.Resource
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Resource.prototype.toJSON = function() {
+            return Resource.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the type url for Resource
+         * @function getTypeUrl
+         * @memberof GameStates.Resource
+         * @static
+         * @param {string} [prefix] Custom type url prefix, defaults to `"type.googleapis.com"`
+         * @returns {string} The type url
+         */
+        Resource.getTypeUrl = function(prefix) {
+            if (prefix === $undefined)
+                prefix = "type.googleapis.com";
+            return prefix + "/GameStates.Resource";
+        };
+
+        return Resource;
     })();
 
     GameStates.WaitingForPlayer = (function() {

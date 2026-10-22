@@ -459,6 +459,9 @@ export namespace GameStates {
         /** Operator keywords. */
         keywords: string[];
 
+        /** Operator model. */
+        model?: (GameStates.Resource.$Properties|null);
+
         /**
          * Creates a new Operator instance using the specified properties.
          * @param [properties] Properties to set
@@ -567,6 +570,9 @@ export namespace GameStates {
             /** Operator keywords */
             keywords?: (string[]|null);
 
+            /** Operator model */
+            model?: (GameStates.Resource.$Properties|null);
+
             /** Unknown fields preserved while decoding when enabled */
             $unknowns?: Uint8Array[];
         }
@@ -594,8 +600,11 @@ export namespace GameStates {
         /** Unknown fields preserved while decoding when enabled */
         $unknowns?: Uint8Array[];
 
-        /** Level resource. */
-        resource: string;
+        /** Level name. */
+        name: string;
+
+        /** Level model. */
+        model?: (GameStates.Resource.$Properties|null);
 
         /**
          * Creates a new Level instance using the specified properties.
@@ -681,8 +690,11 @@ export namespace GameStates {
         /** Properties of a Level. */
         interface $Properties {
 
-            /** Level resource */
-            resource?: (string|null);
+            /** Level name */
+            name?: (string|null);
+
+            /** Level model */
+            model?: (GameStates.Resource.$Properties|null);
 
             /** Unknown fields preserved while decoding when enabled */
             $unknowns?: Uint8Array[];
@@ -942,6 +954,123 @@ export namespace GameStates {
 
         /** Shape of a Point. */
         type $Shape = GameStates.Point.$Properties;
+    }
+
+    /**
+     * Properties of a Resource.
+     * @deprecated Use GameStates.Resource.$Properties instead.
+     */
+    interface IResource extends GameStates.Resource.$Properties {
+    }
+
+    /** Represents a Resource. */
+    class Resource {
+
+        /**
+         * Constructs a new Resource.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: GameStates.Resource.$Properties);
+
+        /** Unknown fields preserved while decoding when enabled */
+        $unknowns?: Uint8Array[];
+
+        /** Resource modelPath. */
+        modelPath: string;
+
+        /**
+         * Creates a new Resource instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Resource instance
+         */
+        static create(properties: GameStates.Resource.$Shape): GameStates.Resource & GameStates.Resource.$Shape;
+        static create(properties?: GameStates.Resource.$Properties): GameStates.Resource;
+
+        /**
+         * Encodes the specified Resource message. Does not implicitly {@link GameStates.Resource.verify|verify} messages.
+         * @param message Resource message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        static encode(message: GameStates.Resource.$Properties, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Resource message, length delimited. Does not implicitly {@link GameStates.Resource.verify|verify} messages.
+         * @param message Resource message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        static encodeDelimited(message: GameStates.Resource.$Properties, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Resource message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns {GameStates.Resource & GameStates.Resource.$Shape} Resource
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): GameStates.Resource & GameStates.Resource.$Shape;
+
+        /**
+         * Decodes a Resource message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns {GameStates.Resource & GameStates.Resource.$Shape} Resource
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): GameStates.Resource & GameStates.Resource.$Shape;
+
+        /**
+         * Verifies a Resource message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a Resource message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Resource
+         */
+        static fromObject(object: { [k: string]: any }): GameStates.Resource;
+
+        /**
+         * Creates a plain object from a Resource message. Also converts values to other types if specified.
+         * @param message Resource
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        static toObject(message: GameStates.Resource, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this Resource to JSON.
+         * @returns JSON object
+         */
+        toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the type url for Resource
+         * @param [prefix] Custom type url prefix, defaults to `"type.googleapis.com"`
+         * @returns The type url
+         */
+        static getTypeUrl(prefix?: string): string;
+    }
+
+    namespace Resource {
+
+        /** Properties of a Resource. */
+        interface $Properties {
+
+            /** Resource modelPath */
+            modelPath?: (string|null);
+
+            /** Unknown fields preserved while decoding when enabled */
+            $unknowns?: Uint8Array[];
+        }
+
+        /** Shape of a Resource. */
+        type $Shape = GameStates.Resource.$Properties;
     }
 
     /**
